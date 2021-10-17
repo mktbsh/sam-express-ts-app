@@ -10,5 +10,5 @@
     "skipLibCheck": true,     
     "noImplicitAny": false,
   },
-  "include": ["api/**/*.ts"]
+  "include": ["src/**/*.ts"]
 }

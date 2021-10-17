@@ -17,7 +17,7 @@ Resources:
   ExpressFunction:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: api/
+      CodeUri: src/
       Handler: lambda.handler
       Runtime: nodejs14.x
       MemorySize: 512
