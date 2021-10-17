@@ -1,33 +1,27 @@
-// const axios = require('axios')
-// const url = 'http://checkip.amazonaws.com/';
-let response;
+const express = require('express');
+const app = express();
+const router = express.Router();
+const cors = require('cors');
 
-/**
- *
- * Event doc: https://docs.aws.amazon.com/apigateway/latest/developerguide/set-up-lambda-proxy-integrations.html#api-gateway-simple-proxy-for-lambda-input-format
- * @param {Object} event - API Gateway Lambda Proxy Input Format
- *
- * Context doc: https://docs.aws.amazon.com/lambda/latest/dg/nodejs-prog-model-context.html 
- * @param {Object} context
- *
- * Return doc: https://docs.aws.amazon.com/apigateway/latest/developerguide/set-up-lambda-proxy-integrations.html
- * @returns {Object} object - API Gateway Lambda Proxy Output Format
- * 
- */
-exports.lambdaHandler = async (event, context) => {
-    try {
-        // const ret = await axios(url);
-        response = {
-            'statusCode': 200,
-            'body': JSON.stringify({
-                message: 'hello world',
-                // location: ret.data.trim()
-            })
-        }
-    } catch (err) {
-        console.log(err);
-        return err;
-    }
+app.use('/static', express.static('static'))
 
-    return response
-};
+router.use(cors())
+    .use(express.json())
+    .use(express.urlencoded({ extended: true }));
+
+
+router.get('/', (req, res) => {
+    res.send(JSON.stringify({
+        foo: 'bar'
+    }));
+});
+
+router.get('/health', async (req, res) => {
+    res.send(JSON.stringify({
+        status: 'ok'
+    }));
+});
+
+app.use('/', router);
+
+module.exports = app;
